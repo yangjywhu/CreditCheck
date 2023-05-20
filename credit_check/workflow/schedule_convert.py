@@ -2,7 +2,7 @@
 
 import re
 import pdfplumber
-from modules import Course, create_dir, list_format_file
+from modules import Course, list_format_file
 
 def course_type_credi(text):
     """

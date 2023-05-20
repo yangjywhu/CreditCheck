@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 from dataclasses import dataclass, field
 import re
 
@@ -54,7 +56,18 @@ class Course:
 
 
 def list_to_course(raw_list):
-    return [Course(*i) for i in raw_list]
+    """
+    If course name is started with English letter, it may contain "第*学期"
+    """
+    course_list = []
+    for raw in raw_list:
+        new = list(raw)
+        if raw[0][1].isdigit():
+            new[0] = raw[0][4:]
+        course = Course(*new)
+        course_list.append(course)
 
-def dict_to_course(raw_dict):
-    return [Course(**i) for i in raw_dict]
+    return course_list
+
+# def dict_to_course(raw_dict):
+#     return [Course(**i) for i in raw_dict]

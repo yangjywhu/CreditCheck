@@ -1,4 +1,4 @@
-from PySide6.QtCore import QThread, Signal, Slot
+from PySide6.QtCore import QThread, Signal
 
 from .schedule_convert import run as schedule_convert
 from .transcript_to_text import run as transcript_to_text

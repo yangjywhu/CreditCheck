@@ -1,9 +1,10 @@
 import os
 import re
-import pandas as pd
-from rich.progress import track
+from collections import OrderedDict
 from docxtpl import DocxTemplate
-from modules import Student, create_dir, list_to_course, dict_to_course
+from openpyxl import Workbook
+
+from modules import Student, create_dir, list_to_course
 
 
 def extract_course(text):
@@ -33,6 +34,18 @@ def run(
     file_names = os.listdir(transcript_dir)
     total_len = len(file_names)
     df_list = []
+    
+    col_names = [
+        "班级", "姓名", "学号", # 0 - 2
+        "专业必完成科目", "专业必GPA", # 3 - 4
+        "专业选完成科目", "转换课程", # 5 - 6
+        "必须完成的类型", "必修未完成数目", "必修未完成科目", # 7 - 9
+        "专业选应", "专业选实", "通识选应", "通识选实", # 10 - 13
+    ]
+
+    wb = Workbook()
+    sheet = wb.active
+    sheet.append(col_names)
     
     for i, file_name in enumerate(file_names):
 
@@ -65,34 +78,32 @@ def run(
         fail_or_absent = stu.check_must(must_now, pass_score)
 
         # Set the key information
-        stu_info = {
-            "班级": stu.classid,
-            "姓名": stu.name,
-            "学号": "'" + stu.id,
-            "专业必完成科目": sep.join(stu.type_names(["专业必"])),
-            "专业选完成科目": sep.join(stu.type_names(["专业选", "fail"])),
-            "专业必GPA": stu.gpa("专业必")["gpa"],
-            "必须完成的类型": sep.join(must_types),
-            "必修未完成数目": len(fail_or_absent),
-            "必修未完成科目": sep.join(fail_or_absent),
-            "专业选应": major_info["credi"]["专业选修课"],
-            "专业选实": stu.gpa(["专业选", "fail"])["credi"],
-            "通识选应": major_info["credi"]["通识选修课"],
-            "通识选实": stu.gpa(["通识选"])["credi"],
-            "转换课程": sep.join(remind_change)
-        }
+        stu_info = OrderedDict({
+            col_names[0]: stu.classid,
+            col_names[1]: stu.name,
+            col_names[2]: "'" + stu.id,
+            col_names[3]: sep.join(stu.type_names(["专业必"])),
+            col_names[4]: stu.gpa("专业必")["gpa"],
+            col_names[5]: sep.join(stu.type_names(["专业选", "fail"])),
+            col_names[6]: sep.join(remind_change),
+            col_names[7]: sep.join(must_types),
+            col_names[8]: len(fail_or_absent),
+            col_names[9]: sep.join(fail_or_absent),
+            col_names[10]: major_info["credi"]["专业选修课"],
+            col_names[11]: stu.gpa(["专业选", "fail"])["credi"],
+            col_names[12]: major_info["credi"]["通识选修课"],
+            col_names[13]: stu.gpa(["通识选"])["credi"]
+        })
 
-        # Output the docx for each stu
+        # Output the docx and xlsx for each stu
         docx_file = out_dir + '/' + stu.classid + '_' + stu.name + ".docx"
         tpl = DocxTemplate(template_file)
         tpl.render(stu_info)
-        tpl.save(out_dir + '/' + docx_file)
-        df_list.append(stu_info)
+        tpl.save(docx_file)
+        sheet.append(list(stu_info.values()))
 
-    # Output an excel file of summary
-    signal_now.emit("生成汇总表")
-    df = pd.DataFrame(df_list)
-    df.to_excel(out_xlsx, index = False)
+    # Save xlsx file
+    wb.save(out_xlsx)
     signal_pct.emit(100)
 
 if __name__ == "__main__":

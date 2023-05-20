@@ -1,3 +1,7 @@
+# my
+_backup/
+_old/
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

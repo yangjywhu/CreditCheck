@@ -2,7 +2,6 @@
 
 import re
 import pdfplumber
-from rich.progress import track
 from modules import Student, create_dir
 
 def run(transcript_file, transcript_dir, level_score, signal_pct, signal_now):
