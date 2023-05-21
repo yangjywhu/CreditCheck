@@ -68,6 +68,7 @@ class MyThread(QThread):
                 self.signal_now
             )
 
+            self.signal_phase.emit("从成绩单中提取课程信息...")
             parse_transcript(
                 major_course,
                 must_types,

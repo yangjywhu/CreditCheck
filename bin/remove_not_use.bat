@@ -11,4 +11,4 @@ del /F .\dist\main\PySide6\Qt6Svg.dll
 del /F .\dist\main\PySide6\Qt6VirtualKeyboard.dll
 
 rmdir /s/q .\dist\main\babel
-xcopy /E/C/I/Y .\materials dist\main\materials
+xcopy /E/C/I/Y .\doc dist\main\doc

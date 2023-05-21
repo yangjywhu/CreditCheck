@@ -19,27 +19,27 @@ Set-ExecutionPolicy RemoteSigned
 创建虚拟环境并安装依赖：
 
 ```powershell
-PS> python -m venv env
-PS> .\env\Scripts\activate
-(env) PS> pip install -r requirements.txt
+python -m venv env
+.\env\Scripts\activate
+pip install -r requirements.txt
 ```
 
 打包：
 
 ```powershell
-(env) PS> pyinstaller -w -i .\materials\icons\icon.ico .\credit_check\main.py
+pyinstaller -w -i .\doc\icons\icon.ico .\src\main.py
 ```
 
-如果出现一以下的提示，输入 `y`
+如果出现以下的提示，输入 `y`。
 
-```
+```plaintext
 WARNING: The output directory "X:XXX\...\dist\main" and ALL ITS CONTENTS will be REMOVED! Continue?
 ```
 
 删除不需要的包以缩小软件大小，并复制素材到可执行文件的目录：
 
 ```powershell
-(env) PS> .\bin\remove_not_use.bat
+.\bin\remove_not_use.bat
 ```
 
 将启动脚本复制到 `dist`目录下
