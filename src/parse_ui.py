@@ -4,7 +4,7 @@ import os
 from PySide6.QtWidgets import QWidget, QFileDialog
 from PySide6.QtCore import Slot
 from ui.ui import Ui_Form
-from workflow.my_thread import MyThread
+from my_thread import MyThread
 
 class MainForm(QWidget):
     def __init__(self, note_text):
@@ -60,6 +60,7 @@ class MainForm(QWidget):
         self.thread.signal_pct.connect(self.progress_pct)
         self.thread.signal_now.connect(self.progress_now)
         self.thread.start()
+
         # self.thread.exit()
     
     def open_dir(self):

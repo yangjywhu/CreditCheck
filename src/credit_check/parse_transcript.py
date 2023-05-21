@@ -33,7 +33,6 @@ def run(
     out_xlsx = out_dir + "/Summary.xlsx"
     file_names = os.listdir(transcript_dir)
     total_len = len(file_names)
-    df_list = []
     
     col_names = [
         "班级", "姓名", "学号", # 0 - 2
@@ -43,16 +42,17 @@ def run(
         "专业选应", "专业选实", "通识选应", "通识选实", # 10 - 13
     ]
 
+    # create a excel workbook
     wb = Workbook()
     sheet = wb.active
     sheet.append(col_names)
     
     for i, file_name in enumerate(file_names):
-
         # Set the file path
         stu_str, _ = os.path.splitext(file_name)
         in_file = transcript_dir + '/' + file_name
         
+        # Set progress bar
         progress_pct = int(i / total_len * 100)
         signal_pct.emit(progress_pct)
         signal_now.emit(stu_str)

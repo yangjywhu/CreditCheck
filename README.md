@@ -1,37 +1,55 @@
 # credit_check
 
 #### 介绍
+
 自动解析pdf格式的培养方案和pdf格式的成绩单，生成学分清查通知单。
 
 #### 软件架构
-软件架构说明
 
+软件架构说明
 
 #### 安装教程
 
-1.  xxxx
-2.  xxxx
-3.  xxxx
+如果使用powershell，需要在管理员状态下输入：
+
+```powershell
+Set-ExecutionPolicy RemoteSigned
+```
+
+创建虚拟环境并安装依赖：
+
+```powershell
+PS> python -m venv env
+PS> .\env\Scripts\activate
+(env) PS> pip install -r requirements.txt
+```
+
+打包：
+
+```powershell
+(env) PS> pyinstaller -w -i .\materials\icons\icon.ico .\credit_check\main.py
+```
+
+如果出现一以下的提示，输入 `y`
+
+```
+WARNING: The output directory "X:XXX\...\dist\main" and ALL ITS CONTENTS will be REMOVED! Continue?
+```
+
+删除不需要的包以缩小软件大小，并复制素材到可执行文件的目录：
+
+```powershell
+(env) PS> .\bin\remove_not_use.bat
+```
+
+将启动脚本复制到 `dist`目录下
+
+```powershell
+copy .\bin\start.bat .\dist\学分清查工具.bat
+```
+
+将 `dist`目录下的 `main`和 `学分清查工具.bat`打包即可发布
 
 #### 使用说明
 
-1.  xxxx
-2.  xxxx
-3.  xxxx
-
-#### 参与贡献
-
-1.  Fork 本仓库
-2.  新建 Feat_xxx 分支
-3.  提交代码
-4.  新建 Pull Request
-
-
-#### 特技
-
-1.  使用 Readme\_XXX.md 来支持不同的语言，例如 Readme\_en.md, Readme\_zh.md
-2.  Gitee 官方博客 [blog.gitee.com](https://blog.gitee.com)
-3.  你可以 [https://gitee.com/explore](https://gitee.com/explore) 这个地址来了解 Gitee 上的优秀开源项目
-4.  [GVP](https://gitee.com/gvp) 全称是 Gitee 最有价值开源项目，是综合评定出的优秀开源项目
-5.  Gitee 官方提供的使用手册 [https://gitee.com/help](https://gitee.com/help)
-6.  Gitee 封面人物是一档用来展示 Gitee 会员风采的栏目 [https://gitee.com/gitee-stars/](https://gitee.com/gitee-stars/)
+![图片](doc/images/main_window.png)
