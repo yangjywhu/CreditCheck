@@ -1,4 +1,4 @@
-# credit_check
+# CreditCheck
 
 #### 介绍
 
