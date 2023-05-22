@@ -95,10 +95,10 @@ def run(
             cols[8]: " / ".join(must_types),
             cols[9]: len(fail_or_absent),
             cols[10]: " / ".join(fail_or_absent),
-            cols[11]: major_info["credi"]["专业选修课"],
-            cols[12]: stu.gpa(["专业选"])["credi"],
-            cols[13]: major_info["credi"]["通识选修课"],
-            cols[14]: stu.gpa(["通识选"])["credi"]
+            cols[11]: major_info["credit"]["专业选修课"],
+            cols[12]: stu.gpa(["专业选"])["credit"],
+            cols[13]: major_info["credit"]["通识选修课"],
+            cols[14]: stu.gpa(["通识选"])["credit"]
         })
 
         # Output the docx and xlsx for each stu

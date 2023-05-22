@@ -5,14 +5,14 @@ import pdfplumber
 from modules import Course, list_format_file
 from modules import convert_text
 
-def course_type_credi(text):
+def course_type_credit(text):
     """
-    For each course type, extract its name and credi
+    For each course type, extract its name and credit
     e.g. "1. 通识课 32.5 学分"
     """
     pattern_list = [
         r"\d\.(\S{3,5})", # course name
-        r"(\d{1,2}\.?\d?)" # course credi
+        r"(\d{1,2}\.?\d?)" # course credit
     ]
     pattern = '\s?'.join(pattern_list)
     target = re.compile(pattern).findall(text)
@@ -41,7 +41,7 @@ def every_course(text):
     pattern_list = [
         r"(\d{8})", # course accession number
         r"(\S+)", # course name
-        r"(\d{1,2}\.?\d?)", # credi
+        r"(\d{1,2}\.?\d?)", # credit
         r"(\d{4}\-\d{4})", # year
         r"(\d)", # semester
         r"(.*)\n" # exam (may not) and course type
@@ -54,7 +54,7 @@ def every_course(text):
         course = Course(
             name = line[1],
             type = line[-1].split()[-1],
-            credi = line[2],
+            credit = line[2],
             score = 0,
             semester = line[3].split('-')[0] + '_' + line[4]
         )
@@ -103,7 +103,7 @@ def run(
 
         # match the courses' name and semester
         course_dict = {
-            "credi": course_type_credi(text),
+            "credit": course_type_credit(text),
             "must_now": [],
             "must_later": [],
             "select": [],

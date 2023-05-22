@@ -28,17 +28,18 @@ class Student:
             my.warning = "fail"
             for target in all_course:
                 if my.short_name == target.short_name:
-                    if my.name != target.name or my.credi != target.credi:
+                    if my.name != target.name or my.credit != target.credit:
                         my.warning = "diff"
                     else:
                         my.warning = "not"
                     my.name = target.name
-                    my.credi = target.credi
-                for name_group in same_course:
-                    if my.name in name_group and target.name in name_group:
-                        my.name = target.name
-                        my.warning = "diff"
-                        my.credi = target.credi
+                    my.credit = target.credit
+                else:
+                    for name_group in same_course:
+                        if my.name in name_group and target.name in name_group:
+                            my.name = target.name
+                            my.warning = "diff"
+                            my.credit = target.credit
 
 
     def check_must(self, must_now, pass_score):
@@ -61,7 +62,7 @@ class Student:
             cond1 = True if types == "all" else course.type in types
             cond2 = True if warnings == "not" else course.warning in warnings
             if cond1 and cond2 if intersect else cond1 or cond2:
-                courses.append(course.name)
+                courses.append(course.name + "(%s)" % course.credit)
 
         if sep:
             return sep.join(courses)
@@ -70,16 +71,16 @@ class Student:
 
 
     def gpa(self, target_types):
-        total_credi = 0
+        total_credit = 0
         total_score = 0
         for course in self.course:
             if course.type in target_types:
-                total_credi += course.credi
-                total_score += course.credi * course.score
+                total_credit += course.credit
+                total_score += course.credit * max(course.score, 50)
 
-        avg_score = total_score / total_credi if total_credi else 0
+        avg_score = total_score / total_credit if total_credit else 50
         gpa = avg_score / 10 - 5
-        return {"credi": round(total_credi, 1), "gpa": round(gpa, 4)}
+        return {"credit": round(total_credit, 1), "gpa": round(gpa, 4)}
 
 
     def converted_course(self):

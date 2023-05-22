@@ -7,7 +7,7 @@ import re
 class Course:
     name: str = field(default = None)
     type: str = field(default = None)
-    credi: str = field(default = None)
+    credit: str = field(default = None)
     score: str = field(default = None)
     semester: str = field(default = None)
     warning: str = field(default = None)
@@ -17,23 +17,23 @@ class Course:
         self.level = None if not level else level[0]
         self.raw_name = self.name
         self.short_name = re.sub("[A-E]", '', self.name)
-        self.credi = float(self.credi)
+        self.credit = float(self.credit)
         self.score = int(self.score)
         gp = self.score / 10 - 5
         self.gp = gp if gp >= 1 else 0
 
     def __str__(self):
-        return "%s %s %.1f %d %s" % (self.name, self.type, self.credi, self.score, self.warning)
+        return "%s %s %.1f %d %s" % (self.name, self.type, self.credit, self.score, self.warning)
 
 
     def to_list(self):
-        return [self.name, self.type, self.credi, self.score, self.semester]
+        return [self.name, self.type, self.credit, self.score, self.semester]
     
     def to_dict(self):
         return {
             "name": self.name,
             "type": self.type,
-            "credi": self.credi,
+            "credit": self.credit,
             "score": self.score,
             "semester": self.semester
         }
@@ -41,7 +41,7 @@ class Course:
     def can_replace(self, other):
         if self.short_name != other.short_name:
             return False
-        if self.credi < other.credi:
+        if self.credit < other.credit:
             return False
         return True
     
