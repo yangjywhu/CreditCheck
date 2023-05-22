@@ -10,6 +10,7 @@ class Course:
     credi: str = field(default = None)
     score: str = field(default = None)
     semester: str = field(default = None)
+    warning: bool = field(default = False)
 
     def __post_init__(self):
         level = re.compile("[A-E]").findall(self.name)
@@ -23,7 +24,17 @@ class Course:
         self.credi_gp = self.credi * self.gp
 
     def __str__(self):
-        return "%s %s %.1f %d" % (self.name, self.type, self.credi, self.score)
+        return "%s %s %.1f %d %s" % (self.name, self.type, self.credi, self.score, self.warning)
+    
+    def __eq__(self, other):
+        return self.short_name == other.short_name
+    
+    def __ge__(self, other):
+        return self.credi >= other.credi
+    
+    def __le__(self, other):
+        return self.credi <= other.credi
+
 
     def to_list(self):
         return [self.name, self.type, self.credi, self.score, self.semester]
@@ -45,7 +56,7 @@ class Course:
         return True
     
     def name_changed(self):
-        return self.name != self.raw_name or self.type == "fail"
+        return self.name != self.raw_name or self.warning
     
     def in_list(self, course_list):
         return self.name in course_list

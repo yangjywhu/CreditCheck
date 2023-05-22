@@ -14,80 +14,86 @@ class MyThread(QThread):
         super().__init__()
         self.ui = ui
     
-    def run(self):
-        try:
-            change_edit_type(self.ui, False)
-            check_boxes = [
-                self.ui.xkjck,
-                self.ui.sjbxk,
-                self.ui.tsxxk,
-                self.ui.zybxk,
-                self.ui.zyxxk,
-                self.ui.tsk,
-            ]
+    def workflow(self):
+        check_boxes = [
+            self.ui.xkjck,
+            self.ui.sjbxk,
+            self.ui.tsxxk,
+            self.ui.zybxk,
+            self.ui.zyxxk,
+            self.ui.tsk,
+        ]
 
-            level_score = {
-                self.ui.pass_score.objectName(): self.ui.pass_score.text(),
-                self.ui.lh_label.text(): self.ui.lh_score.text(),
-                self.ui.zd_label.text(): self.ui.zd_score.text(),
-                self.ui.jg_label.text(): self.ui.jg_score.text(),
-                self.ui.bjg_label.text(): self.ui.bjg_score.text(),
-                self.ui.hg_label.text(): self.ui.hg_score.text(),
-                self.ui.bhg_label.text(): self.ui.bhg_score.text()
-            }
-            
-            must_types = [i.text() for i in check_boxes if i.isChecked()]
-            now_grade = int(self.ui.now_grade.currentText())
-            now_semester = int(self.ui.now_semester.currentText())
-
-            schedule_dir = self.ui.schedule_dir.text()
-            transcript_file = self.ui.transcript_file.text()
-            template_file = self.ui.notice_template.text()
-            enter_year = int(self.ui.enter_year.text())
-            out_dir = self.ui.notice_dir.text()
-
-            transcript_dir = transcript_file.replace(".pdf", "_txt")
-                            
-            self.signal_phase.emit("从培养方案中提取课程信息...")
-            major_course = schedule_convert(
-                schedule_dir,
-                must_types,
-                enter_year,
-                now_grade,
-                now_semester,
-                self.signal_pct,
-                self.signal_now
-            )
-
-            self.signal_phase.emit("将成绩单转换为文本...")
-            transcript_to_text(
-                transcript_file,
-                transcript_dir,
-                level_score,
-                self.signal_pct,
-                self.signal_now
-            )
-
-            self.signal_phase.emit("从成绩单中提取课程信息...")
-            parse_transcript(
-                major_course,
-                must_types,
-                transcript_dir,
-                template_file,
-                out_dir,
-                self.signal_pct,
-                self.signal_now,
-                int(self.ui.pass_score.text())
-            )
-            self.signal_phase.emit("完成")
-            self.signal_now.emit('')
+        level_score = {
+            self.ui.pass_score.objectName(): self.ui.pass_score.text(),
+            self.ui.yx_label.text(): self.ui.yx_score.text(),
+            self.ui.lh_label.text(): self.ui.lh_score.text(),
+            self.ui.zd_label.text(): self.ui.zd_score.text(),
+            self.ui.jg_label.text(): self.ui.jg_score.text(),
+            self.ui.bjg_label.text(): self.ui.bjg_score.text(),
+            self.ui.hg_label.text(): self.ui.hg_score.text(),
+            self.ui.bhg_label.text(): self.ui.bhg_score.text()
+        }
         
-        except Exception as e:
-            note_text = self.ui.note_text.text()
-            error_text = "发生错误，请联系管理员。\n" + str(e)
-            self.ui.note_text.setText(error_text)
-            time.sleep(5)
-            self.ui.note_text.setText(note_text)
+        must_types = [i.text() for i in check_boxes if i.isChecked()]
+        now_grade = int(self.ui.now_grade.currentText())
+        now_semester = int(self.ui.now_semester.currentText())
+
+        schedule_dir = self.ui.schedule_dir.text()
+        transcript_file = self.ui.transcript_file.text()
+        template_file = self.ui.notice_template.text()
+        enter_year = int(self.ui.enter_year.text())
+        out_dir = self.ui.notice_dir.text()
+
+        transcript_dir = transcript_file.replace(".pdf", "_txt")
+                        
+        self.signal_phase.emit("从培养方案中提取课程信息...")
+        major_course = schedule_convert(
+            schedule_dir,
+            must_types,
+            enter_year,
+            now_grade,
+            now_semester,
+            self.signal_pct,
+            self.signal_now
+        )
+
+        self.signal_phase.emit("将成绩单转换为文本...")
+        transcript_to_text(
+            transcript_file,
+            transcript_dir,
+            level_score,
+            self.signal_pct,
+            self.signal_now
+        )
+
+        self.signal_phase.emit("从成绩单中提取课程信息...")
+        parse_transcript(
+            major_course,
+            must_types,
+            enter_year,
+            transcript_dir,
+            template_file,
+            out_dir,
+            self.signal_pct,
+            self.signal_now,
+            int(self.ui.pass_score.text())
+        )
+        self.signal_phase.emit("完成")
+        self.signal_now.emit('')
+
+    def run(self):
+        # try:
+        #     change_edit_type(self.ui, False)
+        #     self.workflow()
+
+        # # TODO: print information
+        # except Exception as e:
+        #     self.signal_phase.emit("发生错误，请联系管理员。" + str(e))
+        #     # self.ui.note_text.setText(e.with_traceback())
     
-        finally:
-            change_edit_type(self.ui, True)
+        # finally:
+        #     change_edit_type(self.ui, True)
+        change_edit_type(self.ui, False)
+        self.workflow()
+        change_edit_type(self.ui, True)

@@ -23,7 +23,8 @@ def run(transcript_file, transcript_dir, level_score, signal_pct, signal_now):
             signal_now.emit(str(stu))
             
             text = re.sub(r"(\S+) ([A-Z])", "\\1\\2", text)
-            text = text.translate(level_score)
+            for key, value in level_score.items():
+                text = text.replace(key, value)
 
             text_file = transcript_dir + '/' + str(stu) + ".txt"
             with open(text_file, 'w', encoding = "UTF-8") as f:
