@@ -7,11 +7,10 @@ from ui.ui import Ui_Form
 from my_thread import MyThread
 
 class MainForm(QWidget):
-    def __init__(self, note_text):
+    def __init__(self):
         super().__init__()
         self.ui = Ui_Form()
         self.ui.setupUi(self)
-        self.ui.note_text.setText(note_text)
         self.ui.schedule_dir_view.clicked.connect(self.choose_schedule)
         self.ui.notice_template_view.clicked.connect(self.choose_notice)
         self.ui.transcript_view.clicked.connect(self.choose_transcript)
@@ -60,11 +59,10 @@ class MainForm(QWidget):
         self.thread.signal_pct.connect(self.progress_pct)
         self.thread.signal_now.connect(self.progress_now)
         self.thread.start()
-
-        # self.thread.exit()
     
     def open_dir(self):
-        os.system('start %s' % self.ui.notice_dir.text())
+        windows_dir = self.ui.notice_dir.text().replace('/', '\\')
+        os.system('start %s' % windows_dir)
     
     @Slot(str)
     def progress_phase(self, string):

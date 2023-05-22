@@ -25,7 +25,6 @@ class MyThread(QThread):
         ]
 
         level_score = {
-            self.ui.pass_score.objectName(): self.ui.pass_score.text(),
             self.ui.yx_label.text(): self.ui.yx_score.text(),
             self.ui.lh_label.text(): self.ui.lh_score.text(),
             self.ui.zd_label.text(): self.ui.zd_score.text(),
@@ -34,7 +33,8 @@ class MyThread(QThread):
             self.ui.hg_label.text(): self.ui.hg_score.text(),
             self.ui.bhg_label.text(): self.ui.bhg_score.text()
         }
-        
+
+        pass_score = int(self.ui.pass_score.text())
         must_types = [i.text() for i in check_boxes if i.isChecked()]
         now_grade = int(self.ui.now_grade.currentText())
         now_semester = int(self.ui.now_semester.currentText())
@@ -44,6 +44,10 @@ class MyThread(QThread):
         template_file = self.ui.notice_template.text()
         enter_year = int(self.ui.enter_year.text())
         out_dir = self.ui.notice_dir.text()
+
+        same_course = self.ui.same_course.toPlainText()
+        same_course = [i.split() for i in same_course.strip().split('\n')]
+        discard_course = self.ui.discard_course.toPlainText().split()
 
         transcript_dir = transcript_file.replace(".pdf", "_txt")
                         
@@ -75,25 +79,28 @@ class MyThread(QThread):
             transcript_dir,
             template_file,
             out_dir,
+            pass_score,
+            same_course,
+            discard_course,
             self.signal_pct,
             self.signal_now,
-            int(self.ui.pass_score.text())
         )
         self.signal_phase.emit("完成")
         self.signal_now.emit('')
 
     def run(self):
-        # try:
-        #     change_edit_type(self.ui, False)
-        #     self.workflow()
+        try:
+            change_edit_type(self.ui, False)
+            self.workflow()
 
-        # # TODO: print information
-        # except Exception as e:
-        #     self.signal_phase.emit("发生错误，请联系管理员。" + str(e))
-        #     # self.ui.note_text.setText(e.with_traceback())
+        except Exception:
+            text = self.ui.progress_phase.text()
+            self.signal_phase.emit(text + "发生错误，请联系管理员。")
     
-        # finally:
-        #     change_edit_type(self.ui, True)
-        change_edit_type(self.ui, False)
-        self.workflow()
-        change_edit_type(self.ui, True)
+        finally:
+            change_edit_type(self.ui, True)
+
+        # # test
+        # change_edit_type(self.ui, False)
+        # self.workflow()
+        # change_edit_type(self.ui, True)

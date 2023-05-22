@@ -7,14 +7,15 @@ from openpyxl import Workbook
 from modules import Student, create_dir, list_to_course
 
 
-def extract_course(text):
+def extract_course(text, discard_course):
     """
     Extract the course from transcript.
     """
     pattern = re.compile(r"(\S+)\s(\S{2,3})\s(\d\.?\d?)\s(\d{1,3})")
     courses = pattern.findall(text)
     courses = list_to_course(courses)
-
+    courses = [i for i in courses if i.name not in discard_course]
+    
     return courses
 
 
@@ -25,11 +26,12 @@ def run(
     transcript_dir,
     template_file,
     out_dir,
+    pass_score,
+    same_course,
+    discard_course,
     signal_pct,
     signal_now,
-    pass_score
 ):
-    sep = '，'
     create_dir(out_dir)
     out_xlsx = out_dir + "/Summary.xlsx"
     file_names = os.listdir(transcript_dir)
@@ -64,7 +66,7 @@ def run(
         
         # Create Student object from transcript
         stu = Student(*stu_str.split('-'))
-        stu.course = extract_course(text)
+        stu.course = extract_course(text, discard_course)
 
         # Set the schedule of the stu's major
         major_info = major_course[str(enter_year) + stu.major]
@@ -72,32 +74,29 @@ def run(
         must_all = must_now + major_info["must_later"]
         course_all = must_all + major_info["select"]
 
-        print("--------")
-        [print(i.name) for i in must_now]
-
         # Mark the course for other major's class
-        stu.check_convert(course_all, ignore = ["通识选"])
-        remind_change =  [i.name for i in stu.course if i.warning]
+        stu.check_convert(course_all, same_course, ignore = ["通识选"])
+        for course in stu.course:
+            if course.warning == "fail":
+                course.type = "专业选"
         fail_or_absent = stu.check_must(must_now, pass_score)
 
-        print("----3----")
-        [print(i) for i in stu.course]
 
         # Set the key information
         stu_info = OrderedDict({
             cols[0]: stu.classid,
             cols[1]: stu.name,
             cols[2]: "'" + stu.id,
-            cols[3]: sep.join(stu.type_names(["专业必"])),
+            cols[3]: stu.get_course(types = ["专业必"]),
             cols[4]: stu.gpa("专业必")["gpa"],
-            cols[5]: sep.join(stu.type_names(["less"])),
-            cols[6]: sep.join(stu.type_names(["专业选"])),
-            cols[7]: sep.join(stu.type_names(["fail"])),
-            cols[8]: sep.join(must_types),
+            cols[5]: stu.get_course(must_types, ["diff"]),
+            cols[6]: stu.get_course(types = ["专业选"]),
+            cols[7]: stu.get_course(warnings = ["fail"]),
+            cols[8]: " / ".join(must_types),
             cols[9]: len(fail_or_absent),
-            cols[10]: sep.join(fail_or_absent),
+            cols[10]: " / ".join(fail_or_absent),
             cols[11]: major_info["credi"]["专业选修课"],
-            cols[12]: stu.gpa(["专业选", "fail"])["credi"],
+            cols[12]: stu.gpa(["专业选"])["credi"],
             cols[13]: major_info["credi"]["通识选修课"],
             cols[14]: stu.gpa(["通识选"])["credi"]
         })

@@ -26,3 +26,5 @@ def change_edit_type(ui, enable = True):
     ui.transcript_view.setEnabled(enable)
     ui.notice_dir_view.setEnabled(enable)
     ui.notice_create.setEnabled(enable)
+    ui.same_course.setEnabled(enable)
+    ui.discard_course.setEnabled(enable)

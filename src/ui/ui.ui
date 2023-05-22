@@ -2,12 +2,15 @@
 <ui version="4.0">
  <class>Form</class>
  <widget class="QWidget" name="Form">
+  <property name="enabled">
+   <bool>true</bool>
+  </property>
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>754</width>
-    <height>597</height>
+    <width>613</width>
+    <height>460</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -16,8 +19,8 @@
   <widget class="QPushButton" name="notice_create">
    <property name="geometry">
     <rect>
-     <x>540</x>
-     <y>280</y>
+     <x>460</x>
+     <y>390</y>
      <width>101</width>
      <height>21</height>
     </rect>
@@ -29,8 +32,8 @@
   <widget class="QPushButton" name="open_notice_dir">
    <property name="geometry">
     <rect>
-     <x>540</x>
-     <y>310</y>
+     <x>460</x>
+     <y>420</y>
      <width>101</width>
      <height>21</height>
     </rect>
@@ -47,7 +50,7 @@
     <rect>
      <x>340</x>
      <y>20</y>
-     <width>291</width>
+     <width>241</width>
      <height>91</height>
     </rect>
    </property>
@@ -73,7 +76,7 @@
     <rect>
      <x>350</x>
      <y>41</y>
-     <width>271</width>
+     <width>221</width>
      <height>57</height>
     </rect>
    </property>
@@ -90,7 +93,7 @@
        <bool>false</bool>
       </property>
       <property name="text">
-       <string>学科基础课</string>
+       <string>学科基</string>
       </property>
       <property name="checked">
        <bool>true</bool>
@@ -100,7 +103,7 @@
     <item row="0" column="1">
      <widget class="QCheckBox" name="sjbxk">
       <property name="text">
-       <string>实践必修课</string>
+       <string>实践必</string>
       </property>
       <property name="checked">
        <bool>true</bool>
@@ -110,7 +113,7 @@
     <item row="0" column="2">
      <widget class="QCheckBox" name="tsk">
       <property name="text">
-       <string>通识课</string>
+       <string>通识</string>
       </property>
       <property name="checked">
        <bool>true</bool>
@@ -120,7 +123,7 @@
     <item row="1" column="0">
      <widget class="QCheckBox" name="zybxk">
       <property name="text">
-       <string>专业必修课</string>
+       <string>专业必</string>
       </property>
       <property name="checked">
        <bool>true</bool>
@@ -130,7 +133,7 @@
     <item row="1" column="1">
      <widget class="QCheckBox" name="zyxxk">
       <property name="text">
-       <string>专业选修课</string>
+       <string>专业选</string>
       </property>
      </widget>
     </item>
@@ -143,7 +146,7 @@
        <bool>false</bool>
       </property>
       <property name="text">
-       <string>通识选修课</string>
+       <string>通识选</string>
       </property>
       <property name="checkable">
        <bool>true</bool>
@@ -276,9 +279,9 @@
   <widget class="QProgressBar" name="progress_bar">
    <property name="geometry">
     <rect>
-     <x>50</x>
-     <y>280</y>
-     <width>451</width>
+     <x>30</x>
+     <y>380</y>
+     <width>411</width>
      <height>23</height>
     </rect>
    </property>
@@ -292,10 +295,10 @@
   <widget class="QLabel" name="progress_phase">
    <property name="geometry">
     <rect>
-     <x>50</x>
-     <y>310</y>
-     <width>161</width>
-     <height>21</height>
+     <x>30</x>
+     <y>400</y>
+     <width>401</width>
+     <height>20</height>
     </rect>
    </property>
    <property name="text">
@@ -305,14 +308,17 @@
   <widget class="QLabel" name="progress_now">
    <property name="geometry">
     <rect>
-     <x>50</x>
-     <y>330</y>
-     <width>411</width>
-     <height>21</height>
+     <x>30</x>
+     <y>420</y>
+     <width>401</width>
+     <height>31</height>
     </rect>
    </property>
    <property name="text">
-    <string/>
+    <string>就绪。</string>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
    </property>
   </widget>
   <widget class="QGroupBox" name="grade_group_2">
@@ -320,189 +326,210 @@
     <rect>
      <x>30</x>
      <y>120</y>
-     <width>691</width>
-     <height>61</height>
+     <width>141</width>
+     <height>241</height>
     </rect>
    </property>
    <property name="title">
     <string>分数设置</string>
    </property>
   </widget>
-  <widget class="Line" name="line">
+  <widget class="QGroupBox" name="crouse_group">
    <property name="geometry">
     <rect>
-     <x>30</x>
-     <y>350</y>
-     <width>691</width>
-     <height>16</height>
+     <x>190</x>
+     <y>120</y>
+     <width>391</width>
+     <height>121</height>
     </rect>
    </property>
-   <property name="orientation">
-    <enum>Qt::Horizontal</enum>
+   <property name="title">
+    <string>课程设置</string>
    </property>
-  </widget>
-  <widget class="QLabel" name="note_text">
-   <property name="geometry">
-    <rect>
-     <x>50</x>
-     <y>370</y>
-     <width>631</width>
-     <height>211</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>TextLabel</string>
-   </property>
-   <property name="alignment">
-    <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
-   </property>
-   <property name="wordWrap">
-    <bool>true</bool>
-   </property>
-  </widget>
-  <widget class="QLabel" name="pass_label">
-   <property name="geometry">
-    <rect>
-     <x>650</x>
-     <y>30</y>
-     <width>48</width>
-     <height>16</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>预警分数</string>
-   </property>
-   <property name="wordWrap">
-    <bool>false</bool>
-   </property>
-  </widget>
-  <widget class="QLineEdit" name="pass_score">
-   <property name="geometry">
-    <rect>
-     <x>650</x>
-     <y>60</y>
-     <width>61</width>
-     <height>21</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>60</string>
-   </property>
+   <widget class="QLabel" name="same_coures_label">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>20</y>
+      <width>181</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>相同课程（一行一个，空格分隔）</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="discard_coures_label">
+    <property name="geometry">
+     <rect>
+      <x>240</x>
+      <y>20</y>
+      <width>131</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>其他课程（无法转换）</string>
+    </property>
+   </widget>
+   <widget class="QPlainTextEdit" name="same_course">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>40</y>
+      <width>221</width>
+      <height>71</height>
+     </rect>
+    </property>
+    <property name="verticalScrollBarPolicy">
+     <enum>Qt::ScrollBarAsNeeded</enum>
+    </property>
+    <property name="horizontalScrollBarPolicy">
+     <enum>Qt::ScrollBarAsNeeded</enum>
+    </property>
+    <property name="plainText">
+     <string>税务会计A 税务会计I</string>
+    </property>
+   </widget>
+   <widget class="QPlainTextEdit" name="discard_course">
+    <property name="geometry">
+     <rect>
+      <x>240</x>
+      <y>40</y>
+      <width>141</width>
+      <height>71</height>
+     </rect>
+    </property>
+    <property name="plainText">
+     <string>英语语言拓展AI</string>
+    </property>
+   </widget>
   </widget>
   <widget class="QWidget" name="layoutWidget3">
    <property name="geometry">
     <rect>
-     <x>60</x>
+     <x>40</x>
      <y>140</y>
-     <width>634</width>
-     <height>31</height>
+     <width>118</width>
+     <height>212</height>
     </rect>
    </property>
-   <layout class="QHBoxLayout" name="horizontalLayout">
-    <property name="spacing">
-     <number>8</number>
+   <layout class="QGridLayout" name="gridLayout_2">
+    <property name="horizontalSpacing">
+     <number>20</number>
     </property>
-    <property name="topMargin">
-     <number>5</number>
-    </property>
-    <property name="bottomMargin">
-     <number>5</number>
-    </property>
-    <item>
-     <widget class="QLabel" name="yx_label">
-      <property name="text">
-       <string>优秀</string>
-      </property>
-     </widget>
-    </item>
-    <item>
-     <widget class="QLineEdit" name="yx_score">
-      <property name="text">
-       <string>95</string>
-      </property>
-     </widget>
-    </item>
-    <item>
-     <widget class="QLabel" name="lh_label">
-      <property name="text">
-       <string>良好</string>
-      </property>
-     </widget>
-    </item>
-    <item>
+    <item row="2" column="1">
      <widget class="QLineEdit" name="lh_score">
       <property name="text">
        <string>85</string>
       </property>
      </widget>
     </item>
-    <item>
-     <widget class="QLabel" name="zd_label">
+    <item row="7" column="1">
+     <widget class="QLineEdit" name="bhg_score">
       <property name="text">
-       <string>中等</string>
+       <string>0</string>
       </property>
      </widget>
     </item>
-    <item>
-     <widget class="QLineEdit" name="zd_score">
-      <property name="text">
-       <string>75</string>
-      </property>
-     </widget>
-    </item>
-    <item>
+    <item row="4" column="0">
      <widget class="QLabel" name="jg_label">
       <property name="text">
        <string>及格</string>
       </property>
      </widget>
     </item>
-    <item>
-     <widget class="QLineEdit" name="jg_score">
-      <property name="text">
-       <string>65</string>
-      </property>
-     </widget>
-    </item>
-    <item>
-     <widget class="QLabel" name="bjg_label">
-      <property name="text">
-       <string>不及格</string>
-      </property>
-     </widget>
-    </item>
-    <item>
-     <widget class="QLineEdit" name="bjg_score">
-      <property name="text">
-       <string>0</string>
-      </property>
-     </widget>
-    </item>
-    <item>
+    <item row="6" column="0">
      <widget class="QLabel" name="hg_label">
       <property name="text">
        <string>合格</string>
       </property>
      </widget>
     </item>
-    <item>
+    <item row="6" column="1">
      <widget class="QLineEdit" name="hg_score">
       <property name="text">
        <string>80</string>
       </property>
      </widget>
     </item>
-    <item>
+    <item row="3" column="0">
+     <widget class="QLabel" name="zd_label">
+      <property name="text">
+       <string>中等</string>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="1">
+     <widget class="QLineEdit" name="yx_score">
+      <property name="text">
+       <string>95</string>
+      </property>
+     </widget>
+    </item>
+    <item row="5" column="1">
+     <widget class="QLineEdit" name="bjg_score">
+      <property name="text">
+       <string>0</string>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="0">
+     <widget class="QLabel" name="pass_label">
+      <property name="text">
+       <string>预警分数</string>
+      </property>
+      <property name="wordWrap">
+       <bool>false</bool>
+      </property>
+     </widget>
+    </item>
+    <item row="4" column="1">
+     <widget class="QLineEdit" name="jg_score">
+      <property name="text">
+       <string>65</string>
+      </property>
+     </widget>
+    </item>
+    <item row="3" column="1">
+     <widget class="QLineEdit" name="zd_score">
+      <property name="text">
+       <string>75</string>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="0">
+     <widget class="QLabel" name="yx_label">
+      <property name="text">
+       <string>优秀</string>
+      </property>
+     </widget>
+    </item>
+    <item row="7" column="0">
      <widget class="QLabel" name="bhg_label">
       <property name="text">
        <string>不合格</string>
       </property>
      </widget>
     </item>
-    <item>
-     <widget class="QLineEdit" name="bhg_score">
+    <item row="0" column="1">
+     <widget class="QLineEdit" name="pass_score">
       <property name="text">
-       <string>0</string>
+       <string>60</string>
+      </property>
+     </widget>
+    </item>
+    <item row="2" column="0">
+     <widget class="QLabel" name="lh_label">
+      <property name="text">
+       <string>良好</string>
+      </property>
+     </widget>
+    </item>
+    <item row="5" column="0">
+     <widget class="QLabel" name="bjg_label">
+      <property name="text">
+       <string>不及格</string>
       </property>
      </widget>
     </item>
@@ -511,24 +538,24 @@
   <widget class="QWidget" name="layoutWidget4">
    <property name="geometry">
     <rect>
-     <x>36</x>
-     <y>200</y>
-     <width>661</width>
-     <height>61</height>
+     <x>190</x>
+     <y>250</y>
+     <width>391</width>
+     <height>112</height>
     </rect>
    </property>
    <layout class="QGridLayout" name="gridLayout">
-    <item row="1" column="2">
-     <widget class="QPushButton" name="transcript_view">
+    <item row="0" column="0">
+     <widget class="QLabel" name="label_20">
       <property name="text">
-       <string>浏览...</string>
+       <string>培养方案</string>
       </property>
      </widget>
     </item>
-    <item row="0" column="4">
-     <widget class="QLabel" name="label_17">
+    <item row="0" column="1">
+     <widget class="QLineEdit" name="schedule_dir">
       <property name="text">
-       <string>通知书模板</string>
+       <string>../培养方案</string>
       </property>
      </widget>
     </item>
@@ -546,76 +573,68 @@
       </property>
      </widget>
     </item>
-    <item row="0" column="1">
-     <widget class="QLineEdit" name="schedule_dir">
+    <item row="1" column="1">
+     <widget class="QLineEdit" name="transcript_file">
       <property name="text">
-       <string>../培养方案</string>
+       <string>../2021成绩单.pdf</string>
       </property>
      </widget>
     </item>
-    <item row="0" column="5">
+    <item row="1" column="2">
+     <widget class="QPushButton" name="transcript_view">
+      <property name="text">
+       <string>浏览...</string>
+      </property>
+     </widget>
+    </item>
+    <item row="2" column="0">
+     <widget class="QLabel" name="label_17">
+      <property name="text">
+       <string>通知书模板</string>
+      </property>
+     </widget>
+    </item>
+    <item row="2" column="1">
      <widget class="QLineEdit" name="notice_template">
       <property name="text">
        <string>../学分清查通知书模板.docx</string>
       </property>
      </widget>
     </item>
-    <item row="1" column="6">
-     <widget class="QPushButton" name="notice_dir_view">
-      <property name="text">
-       <string>浏览...</string>
-      </property>
-     </widget>
-    </item>
-    <item row="0" column="0">
-     <widget class="QLabel" name="label_20">
-      <property name="text">
-       <string>培养方案</string>
-      </property>
-     </widget>
-    </item>
-    <item row="0" column="6">
+    <item row="2" column="2">
      <widget class="QPushButton" name="notice_template_view">
       <property name="text">
        <string>浏览...</string>
       </property>
      </widget>
     </item>
-    <item row="1" column="4">
+    <item row="3" column="0">
      <widget class="QLabel" name="label_18">
       <property name="text">
        <string>通知书保存</string>
       </property>
      </widget>
     </item>
-    <item row="1" column="1">
-     <widget class="QLineEdit" name="transcript_file">
-      <property name="text">
-       <string>../2021成绩单测试.pdf</string>
-      </property>
-     </widget>
-    </item>
-    <item row="1" column="5">
+    <item row="3" column="1">
      <widget class="QLineEdit" name="notice_dir">
       <property name="text">
        <string>../new</string>
       </property>
      </widget>
     </item>
-    <item row="0" column="3">
-     <widget class="QLabel" name="label">
+    <item row="3" column="2">
+     <widget class="QPushButton" name="notice_dir_view">
       <property name="text">
-       <string/>
+       <string>浏览...</string>
       </property>
      </widget>
     </item>
    </layout>
   </widget>
   <zorder>grade_group_2</zorder>
-  <zorder>pass_label</zorder>
-  <zorder>pass_score</zorder>
   <zorder>layoutWidget3</zorder>
   <zorder>layoutWidget4</zorder>
+  <zorder>crouse_group</zorder>
   <zorder>must_group</zorder>
   <zorder>grade_group</zorder>
   <zorder>layoutWidget1</zorder>
@@ -625,8 +644,6 @@
   <zorder>progress_bar</zorder>
   <zorder>progress_phase</zorder>
   <zorder>progress_now</zorder>
-  <zorder>line</zorder>
-  <zorder>note_text</zorder>
  </widget>
  <resources/>
  <connections/>

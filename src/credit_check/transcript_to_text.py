@@ -3,6 +3,7 @@
 import re
 import pdfplumber
 from modules import Student, create_dir
+from modules import convert_text
 
 def run(transcript_file, transcript_dir, level_score, signal_pct, signal_now):
     create_dir(transcript_dir)
@@ -24,6 +25,8 @@ def run(transcript_file, transcript_dir, level_score, signal_pct, signal_now):
             
             text = re.sub(r"(\S+) ([A-Z])", "\\1\\2", text)
             for key, value in level_score.items():
+                text = text.replace(key, value)
+            for key, value in convert_text.items():
                 text = text.replace(key, value)
 
             text_file = transcript_dir + '/' + str(stu) + ".txt"

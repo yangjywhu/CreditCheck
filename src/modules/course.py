@@ -10,7 +10,7 @@ class Course:
     credi: str = field(default = None)
     score: str = field(default = None)
     semester: str = field(default = None)
-    warning: bool = field(default = False)
+    warning: str = field(default = None)
 
     def __post_init__(self):
         level = re.compile("[A-E]").findall(self.name)
@@ -21,19 +21,9 @@ class Course:
         self.score = int(self.score)
         gp = self.score / 10 - 5
         self.gp = gp if gp >= 1 else 0
-        self.credi_gp = self.credi * self.gp
 
     def __str__(self):
         return "%s %s %.1f %d %s" % (self.name, self.type, self.credi, self.score, self.warning)
-    
-    def __eq__(self, other):
-        return self.short_name == other.short_name
-    
-    def __ge__(self, other):
-        return self.credi >= other.credi
-    
-    def __le__(self, other):
-        return self.credi <= other.credi
 
 
     def to_list(self):

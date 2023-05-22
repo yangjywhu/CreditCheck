@@ -12,11 +12,8 @@ if __name__ == "__main__":
 
     app = QApplication(sys.argv)
     app.setWindowIcon(QIcon(icon_file))
-
-    with open(note_file, 'r', encoding = "utf-8") as f:
-        note_text = f.read()
  
-    window = MainForm(note_text)
+    window = MainForm()
     window.show()
     
     sys.exit(app.exec())

@@ -3,6 +3,7 @@
 import re
 import pdfplumber
 from modules import Course, list_format_file
+from modules import convert_text
 
 def course_type_credi(text):
     """
@@ -34,6 +35,9 @@ def every_course(text):
     space.
     e.g. "04332021 高等数学B(Ⅱ) 4.0 2021-2022 2 学科基础课"
     """
+
+    for key, value in convert_text.items():
+        text = text.replace(key, value)
     pattern_list = [
         r"(\d{8})", # course accession number
         r"(\S+)", # course name

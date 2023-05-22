@@ -6,7 +6,6 @@ class Student:
     id: str = field(default = None)
     name: str = field(default = None)
     major: str = field(default = None)
-    warn: bool = field(default = False)
     course: list = field(default = None)
 
 
@@ -22,23 +21,24 @@ class Student:
         return [self.classid, self.id, self.name, self.major]
 
 
-    def check_convert(self, all_course, ignore):
+    def check_convert(self, all_course, same_course, ignore):
         for my in self.course:
             if my.type in ignore:
                 continue
-            my.warning = True
-            raw_type = my.type
-            my.type = "fail"
+            my.warning = "fail"
             for target in all_course:
                 if my.short_name == target.short_name:
-                    if my.credi >= target.credi:
+                    if my.name != target.name or my.credi != target.credi:
+                        my.warning = "diff"
+                    else:
+                        my.warning = "not"
+                    my.name = target.name
+                    my.credi = target.credi
+                for name_group in same_course:
+                    if my.name in name_group and target.name in name_group:
                         my.name = target.name
-                        my.warning = False
-                        my.type = raw_type
-                    elif my.credi <= target.credi:
-                        my.name = target.name
-                        my.type = "less"
-                    break
+                        my.warning = "diff"
+                        my.credi = target.credi
 
 
     def check_must(self, must_now, pass_score):
@@ -48,20 +48,38 @@ class Student:
         return incomplete
 
 
-    def type_names(self, types):
-        return (i.name for i in self.course if i.type in types)
+    def get_course(
+            self,
+            types = "all",
+            warnings = "not",
+            intersect = True,
+            sep = " / "
+        ):
+
+        courses = []
+        for course in self.course:
+            cond1 = True if types == "all" else course.type in types
+            cond2 = True if warnings == "not" else course.warning in warnings
+            if cond1 and cond2 if intersect else cond1 or cond2:
+                courses.append(course.name)
+
+        if sep:
+            return sep.join(courses)
+        else:
+            return courses
 
 
     def gpa(self, target_types):
         total_credi = 0
-        total_gp = 0
+        total_score = 0
         for course in self.course:
             if course.type in target_types:
                 total_credi += course.credi
-                total_gp += course.credi_gp
-        
-        gpa = total_gp / total_credi if total_credi else 0
-        return {"credi": round(total_credi, 1), "gpa": round(gpa, 3)}
+                total_score += course.credi * course.score
+
+        avg_score = total_score / total_credi if total_credi else 0
+        gpa = avg_score / 10 - 5
+        return {"credi": round(total_credi, 1), "gpa": round(gpa, 4)}
 
 
     def converted_course(self):
