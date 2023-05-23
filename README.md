@@ -79,7 +79,7 @@ WARNING: The output directory "X:XXX\...\dist\main" and ALL ITS CONTENTS will be
 
 ## 更新日志
 
-### v0.1.1
+### v0.1.2
 
 - 将带括号的体育（如：“体育I（养生）”）去除括号，不用申请转换。
 - 将“二外”与“大学基础英语”比对，并标注需要申请转换。
