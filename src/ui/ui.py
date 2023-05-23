@@ -349,6 +349,9 @@ class Ui_Form(object):
 
         self.retranslateUi(Form)
 
+        self.now_grade.setCurrentIndex(1)
+
+
         QMetaObject.connectSlotsByName(Form)
     # setupUi
 
@@ -405,16 +408,16 @@ class Ui_Form(object):
         self.lh_label.setText(QCoreApplication.translate("Form", u"\u826f\u597d", None))
         self.bjg_label.setText(QCoreApplication.translate("Form", u"\u4e0d\u53ca\u683c", None))
         self.label_20.setText(QCoreApplication.translate("Form", u"\u57f9\u517b\u65b9\u6848", None))
-        self.schedule_dir.setText(QCoreApplication.translate("Form", u"../\u57f9\u517b\u65b9\u6848", None))
+        self.schedule_dir.setText(QCoreApplication.translate("Form", u"_data/\u57f9\u517b\u65b9\u6848", None))
         self.schedule_dir_view.setText(QCoreApplication.translate("Form", u"\u6d4f\u89c8...", None))
         self.label_22.setText(QCoreApplication.translate("Form", u"\u6210\u7ee9\u5355", None))
-        self.transcript_file.setText(QCoreApplication.translate("Form", u"../2021\u6210\u7ee9\u5355.pdf", None))
+        self.transcript_file.setText(QCoreApplication.translate("Form", u"_data/2021\u6210\u7ee9\u5355.pdf", None))
         self.transcript_view.setText(QCoreApplication.translate("Form", u"\u6d4f\u89c8...", None))
         self.label_17.setText(QCoreApplication.translate("Form", u"\u901a\u77e5\u4e66\u6a21\u677f", None))
-        self.notice_template.setText(QCoreApplication.translate("Form", u"../\u5b66\u5206\u6e05\u67e5\u901a\u77e5\u4e66\u6a21\u677f.docx", None))
+        self.notice_template.setText(QCoreApplication.translate("Form", u"_data/\u5b66\u5206\u6e05\u67e5\u901a\u77e5\u4e66\u6a21\u677f.docx", None))
         self.notice_template_view.setText(QCoreApplication.translate("Form", u"\u6d4f\u89c8...", None))
         self.label_18.setText(QCoreApplication.translate("Form", u"\u901a\u77e5\u4e66\u4fdd\u5b58", None))
-        self.notice_dir.setText(QCoreApplication.translate("Form", u"../new", None))
+        self.notice_dir.setText(QCoreApplication.translate("Form", u"_data/\u5b66\u5206\u6e05\u67e5\u7ed3\u679c", None))
         self.notice_dir_view.setText(QCoreApplication.translate("Form", u"\u6d4f\u89c8...", None))
     # retranslateUi
 

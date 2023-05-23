@@ -95,6 +95,10 @@ class MyThread(QThread):
 
         except PermissionError:
             self.signal_phase.emit("写入失败 请关闭Word文档")
+        
+        except FileNotFoundError as e:
+            self.signal_phase.emit("找不到指定路径")
+            self.signal_now.emit(e)
 
         except Exception:
             text = self.ui.progress_phase.text()

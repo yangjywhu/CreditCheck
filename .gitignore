@@ -1,6 +1,7 @@
 # my
 _backup/
 _old/
+_data/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

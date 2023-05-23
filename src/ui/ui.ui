@@ -202,6 +202,9 @@
       <property name="currentText">
        <string>2</string>
       </property>
+      <property name="currentIndex">
+       <number>1</number>
+      </property>
       <item>
        <property name="text">
         <string>1</string>
@@ -555,7 +558,7 @@
     <item row="0" column="1">
      <widget class="QLineEdit" name="schedule_dir">
       <property name="text">
-       <string>../培养方案</string>
+       <string>_data/培养方案</string>
       </property>
      </widget>
     </item>
@@ -576,7 +579,7 @@
     <item row="1" column="1">
      <widget class="QLineEdit" name="transcript_file">
       <property name="text">
-       <string>../2021成绩单.pdf</string>
+       <string>_data/2021成绩单.pdf</string>
       </property>
      </widget>
     </item>
@@ -597,7 +600,7 @@
     <item row="2" column="1">
      <widget class="QLineEdit" name="notice_template">
       <property name="text">
-       <string>../学分清查通知书模板.docx</string>
+       <string>_data/学分清查通知书模板.docx</string>
       </property>
      </widget>
     </item>
@@ -618,7 +621,7 @@
     <item row="3" column="1">
      <widget class="QLineEdit" name="notice_dir">
       <property name="text">
-       <string>../new</string>
+       <string>_data/学分清查结果</string>
       </property>
      </widget>
     </item>
