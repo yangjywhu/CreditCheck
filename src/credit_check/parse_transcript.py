@@ -58,7 +58,8 @@ def run(
         # Set progress bar
         progress_pct = int(i / total_len * 100)
         signal_pct.emit(progress_pct)
-        signal_now.emit(stu_str)
+        # signal_now.emit(stu_str)
+        signal_now.emit("(%d/%d)%s" % (i + 1, total_len, stu_str))
 
         # Read the transcript of text
         with open(in_file, 'r', encoding = "UTF-8") as f:
@@ -81,7 +82,6 @@ def run(
                 course.type = "专业选"
         fail_or_absent = stu.check_must(must_now, pass_score)
 
-
         # Set the key information
         stu_info = OrderedDict({
             cols[0]: stu.classid,
@@ -91,7 +91,7 @@ def run(
             cols[4]: stu.gpa("专业必")["gpa"],
             cols[5]: stu.get_course(must_types, ["diff"]),
             cols[6]: stu.get_course(types = ["专业选"]),
-            cols[7]: stu.get_course(warnings = ["fail"]),
+            cols[7]: stu.get_course(["专业选"], ["diff", "fail"]),
             cols[8]: " / ".join(must_types),
             cols[9]: len(fail_or_absent),
             cols[10]: " / ".join(fail_or_absent),

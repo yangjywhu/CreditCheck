@@ -51,7 +51,7 @@ class MyThread(QThread):
 
         transcript_dir = transcript_file.replace(".pdf", "_txt")
                         
-        self.signal_phase.emit("从培养方案中提取课程信息...")
+        self.signal_phase.emit("(1/3)从培养方案中提取课程信息...")
         major_course = schedule_convert(
             schedule_dir,
             must_types,
@@ -62,7 +62,7 @@ class MyThread(QThread):
             self.signal_now
         )
 
-        self.signal_phase.emit("将成绩单转换为文本...")
+        self.signal_phase.emit("(2/3)将成绩单转换为文本...")
         transcript_to_text(
             transcript_file,
             transcript_dir,
@@ -71,7 +71,7 @@ class MyThread(QThread):
             self.signal_now
         )
 
-        self.signal_phase.emit("从成绩单中提取课程信息...")
+        self.signal_phase.emit("(3/3)从成绩单中提取课程信息...")
         parse_transcript(
             major_course,
             must_types,
@@ -92,6 +92,9 @@ class MyThread(QThread):
         try:
             change_edit_type(self.ui, False)
             self.workflow()
+
+        except PermissionError:
+            self.signal_phase.emit("写入失败 请关闭Word文档")
 
         except Exception:
             text = self.ui.progress_phase.text()

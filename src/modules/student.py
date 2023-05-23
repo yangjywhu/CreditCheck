@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 from dataclasses import dataclass, field
 
 @dataclass
@@ -26,20 +28,33 @@ class Student:
             if my.type in ignore:
                 continue
             my.warning = "fail"
+            my_physical = my.name.split('(')[0]
+
             for target in all_course:
+                target_physical = target.name.split('(')[0]
                 if my.short_name == target.short_name:
-                    if my.name != target.name or my.credit != target.credit:
-                        my.warning = "diff"
-                    else:
-                        my.warning = "not"
+                    my.warning = "not" if my == target else "diff"
                     my.name = target.name
                     my.credit = target.credit
+                    my.type = target.type
+
+                elif my_physical == target_physical and my.name[:2] == "体育":
+                    my.name = target.name
+                    my.credit = target.credit
+                    my.warning = "not"
+                
+                elif my.name[:2] == "二外" and target.name[:6] == "大学基础英语" \
+                    and my.name.split('(')[0].lstrip("二外") == target.name[7:].split('(')[0]:
+                    my.name = target.name
+                    my.credit = target.credit
+                    my.warning = "diff"
+
                 else:
                     for name_group in same_course:
                         if my.name in name_group and target.name in name_group:
                             my.name = target.name
-                            my.warning = "diff"
                             my.credit = target.credit
+                            my.warning = "diff"
 
 
     def check_must(self, must_now, pass_score):

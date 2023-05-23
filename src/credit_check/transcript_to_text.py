@@ -21,13 +21,16 @@ def run(transcript_file, transcript_dir, level_score, signal_pct, signal_now):
 
             progress_pct = int(i / total_len * 100)
             signal_pct.emit(progress_pct)
-            signal_now.emit(str(stu))
+            signal_now.emit("(%d/%d)%s" % (i + 1, total_len, str(stu)))
             
             text = re.sub(r"(\S+) ([A-Z])", "\\1\\2", text)
+            text = re.sub(r'[*]', '', text)
+            # text = re.sub(r"(体育\S{1,3})(\(\S+?\))", "\\1", text)
             for key, value in level_score.items():
                 text = text.replace(key, value)
             for key, value in convert_text.items():
                 text = text.replace(key, value)
+
 
             text_file = transcript_dir + '/' + str(stu) + ".txt"
             with open(text_file, 'w', encoding = "UTF-8") as f:

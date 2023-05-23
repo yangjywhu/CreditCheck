@@ -94,7 +94,8 @@ def run(
 
         progress_pct = int(i / total_len * 100)
         signal_pct.emit(progress_pct)
-        signal_now.emit(major_name)
+        # signal_now.emit(major_name)
+        signal_now.emit("(%d/%d)%s" % (i + 1, total_len, major_name))
         
         # parse pdf into text
         with pdfplumber.open(pdf_file) as pdf:

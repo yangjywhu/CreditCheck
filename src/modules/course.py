@@ -24,6 +24,12 @@ class Course:
 
     def __str__(self):
         return "%s %s %.1f %d %s" % (self.name, self.type, self.credit, self.score, self.warning)
+    
+    def __eq__(self, other):
+        cond1 = self.name == other.name
+        cond2 = self.credit == other.credit 
+        cond3 = self.type == other.type
+        return cond1 and cond2 and cond3
 
 
     def to_list(self):
