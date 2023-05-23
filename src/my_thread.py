@@ -15,6 +15,9 @@ class MyThread(QThread):
         self.ui = ui
     
     def workflow(self):
+        self.signal_phase.emit('')
+        self.signal_now.emit('')
+        
         check_boxes = [
             self.ui.xkjck,
             self.ui.sjbxk,
@@ -94,15 +97,15 @@ class MyThread(QThread):
             self.workflow()
 
         except PermissionError:
-            self.signal_phase.emit("写入失败 请关闭Word文档")
+            self.signal_phase.emit("错误: Word文档被占用")
         
         except FileNotFoundError as e:
-            self.signal_phase.emit("找不到指定路径")
-            self.signal_now.emit(e)
+            self.signal_phase.emit("错误: 输入文件或文件夹不存在")
+            self.signal_now.emit(str(e))
 
         except Exception:
             text = self.ui.progress_phase.text()
-            self.signal_phase.emit(text + "发生错误，请联系管理员。")
+            self.signal_phase.emit(text + "错误: 请联系管理员。")
     
         finally:
             change_edit_type(self.ui, True)
