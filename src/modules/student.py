@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from dataclasses import dataclass, field
+import re
 
 @dataclass
 class Student:
@@ -24,42 +25,46 @@ class Student:
 
 
     def check_convert(self, all_course, same_course, ignore):
+        same_course_flatten = [i for j in same_course for i in j]
+        all_short = {}
+        for key, value in all_course.items():
+            all_short[re.sub("[A-E]", '', key)] = value
+    
         for my in self.course:
             if my.type in ignore:
                 continue
             my.warning = "fail"
-            my_physical = my.name.split('(')[0]
 
-            for target in all_course:
-                target_physical = target.name.split('(')[0]
-                if my.short_name == target.short_name:
-                    my.warning = "not" if my == target else "diff"
-                    my.name = target.name
-                    my.credit = target.credit
-                    my.type = target.type
+            if my.short_name in all_short.keys():
+                target = all_short[my.short_name]
+                my.convert_to(target, "not" if my == target else "diff")
 
-                elif my_physical == target_physical and my.name[:2] == "体育":
-                    my.name = target.name
-                    my.credit = target.credit
-                    my.warning = "not"
-                
-                elif my.name[:2] == "二外" and target.name[:6] == "大学基础英语" \
-                    and my.name.split('(')[0].lstrip("二外") == target.name[7:].split('(')[0]:
-                    my.name = target.name
-                    my.credit = target.credit
-                    my.warning = "diff"
+            elif my.name[:2] == "体育":
+                if my.name[-1] == ')':
+                    target = all_short[my.name.split('(')[0]]
+                    my.convert_to(target, "not")
 
-                else:
-                    for name_group in same_course:
-                        if my.name in name_group and target.name in name_group:
-                            my.name = target.name
-                            my.credit = target.credit
-                            my.warning = "diff"
+            elif my.name[:2] == "二外":
+                target = my.name.split('(')[0].replace("二外", "大学基础英语")
+                target = all_short[target]
+                my.convert_to(target, "diff")
+            
+            elif my.name in same_course_flatten:
+                break_flag = False
+                for name_group in same_course:
+                    if my.name in name_group:
+                        for target in name_group:
+                            if target in all_course.keys():
+                                my.convert_to(all_course[target], "diff")
+                                break_flag = True
+                                break
+                    if break_flag:
+                        break
 
 
     def check_must(self, must_now, pass_score):
         my_courses = set(i.name for i in self.course if i.is_pass(pass_score))
-        must_courses = set(i.name for i in must_now)
+        must_courses = set(i.name for i in must_now.values())
         incomplete = must_courses.difference(my_courses)
         return incomplete
 

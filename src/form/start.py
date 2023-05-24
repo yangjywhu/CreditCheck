@@ -3,8 +3,9 @@
 import os
 from PySide6.QtWidgets import QWidget, QFileDialog
 from PySide6.QtCore import Slot
-from ui.ui import Ui_Form
-from my_thread import MyThread
+from ui.start import Ui_Form
+from form.error import ErrorDialog
+from threads.start import MyThread
 
 class MainForm(QWidget):
     def __init__(self):
@@ -58,6 +59,7 @@ class MainForm(QWidget):
         self.thread.signal_phase.connect(self.progress_phase)
         self.thread.signal_pct.connect(self.progress_pct)
         self.thread.signal_now.connect(self.progress_now)
+        self.thread.signal_error.connect(self.error_dialog)
         self.thread.start()
     
     def open_dir(self):
@@ -74,4 +76,10 @@ class MainForm(QWidget):
     
     @Slot(str)
     def progress_now(self, string):
-        self.ui.progress_now.setText(string)    
+        self.ui.progress_now.setText(string)
+    
+    @Slot(str)
+    def error_dialog(self, string):
+        self.error_win = ErrorDialog()
+        self.error_win.show()
+        self.error_win.ui.plainTextEdit.setPlainText(string)

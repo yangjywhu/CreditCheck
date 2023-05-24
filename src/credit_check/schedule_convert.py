@@ -2,8 +2,9 @@
 
 import re
 import pdfplumber
-from modules import Course, list_format_file
-from modules import convert_text
+from modules.course import Course
+from modules.dir_operate import list_format_file
+from modules.settings import convert_text
 
 def course_type_credit(text):
     """
@@ -105,18 +106,18 @@ def run(
         # match the courses' name and semester
         course_dict = {
             "credit": course_type_credit(text),
-            "must_now": [],
-            "must_later": [],
-            "select": [],
+            "must_now": {},
+            "must_later": {},
+            "select": {},
         }
 
         for course in every_course(text):
             if course.type not in must_types:
-                course_dict["select"].append(course)
+                course_dict["select"][course.name] = course
             elif course.semester in semesters:
-                course_dict["must_now"].append(course)
+                course_dict["must_now"][course.name] = course
             else:
-                course_dict["must_later"].append(course)
+                course_dict["must_later"][course.name] = course
         
         major_course[major_name] = course_dict
 

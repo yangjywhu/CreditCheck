@@ -3,7 +3,7 @@
 import sys
 from PySide6.QtWidgets import QApplication
 from PySide6.QtGui import QIcon
-from parse_ui import MainForm
+from form.start import MainForm
 
 
 if __name__ == "__main__":

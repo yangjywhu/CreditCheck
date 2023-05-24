@@ -2,8 +2,9 @@
 
 import re
 import pdfplumber
-from modules import Student, create_dir
-from modules import convert_text
+from modules.student import Student
+from modules.dir_operate import create_dir
+from modules.settings import convert_text
 
 def run(transcript_file, transcript_dir, level_score, signal_pct, signal_now):
     create_dir(transcript_dir)

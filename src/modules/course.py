@@ -12,6 +12,7 @@ class Course:
     semester: str = field(default = None)
     warning: str = field(default = None)
 
+
     def __post_init__(self):
         level = re.compile("[A-E]").findall(self.name)
         self.level = None if not level else level[0]
@@ -22,9 +23,10 @@ class Course:
         gp = self.score / 10 - 5
         self.gp = gp if gp >= 1 else 0
 
+
     def __str__(self):
         return "%s %s %.1f %d %s" % (self.name, self.type, self.credit, self.score, self.warning)
-    
+
     def __eq__(self, other):
         cond1 = self.name == other.name
         cond2 = self.credit == other.credit 
@@ -32,9 +34,17 @@ class Course:
         return cond1 and cond2 and cond3
 
 
+    def convert_to(self, other, warning = "not"):
+        self.name = other.name
+        self.credit = other.credit
+        self.type = other.type
+        self.warning = warning
+
+
     def to_list(self):
         return [self.name, self.type, self.credit, self.score, self.semester]
-    
+
+  
     def to_dict(self):
         return {
             "name": self.name,
@@ -43,19 +53,23 @@ class Course:
             "score": self.score,
             "semester": self.semester
         }
-    
+
+
     def can_replace(self, other):
         if self.short_name != other.short_name:
             return False
         if self.credit < other.credit:
             return False
         return True
-    
+
+
     def name_changed(self):
         return self.name != self.raw_name or self.warning
-    
+
+
     def in_list(self, course_list):
         return self.name in course_list
+
 
     def is_pass(self, pass_score):
         return self.score >= pass_score

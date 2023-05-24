@@ -1,6 +1,7 @@
-import time
-from PySide6.QtCore import QThread, Signal
-from modules import change_edit_type
+import traceback
+from PySide6.QtCore import QThread, Signal, Slot
+from modules.ui_operate import change_edit_type
+from form.error import ErrorDialog
 from credit_check import schedule_convert
 from credit_check import transcript_to_text
 from credit_check import parse_transcript
@@ -9,6 +10,7 @@ class MyThread(QThread):
     signal_phase = Signal(str)
     signal_pct = Signal(int)
     signal_now = Signal(str)
+    signal_error = Signal(str)
 
     def __init__(self, ui):
         super().__init__()
@@ -55,7 +57,7 @@ class MyThread(QThread):
         transcript_dir = transcript_file.replace(".pdf", "_txt")
                         
         self.signal_phase.emit("(1/3)从培养方案中提取课程信息...")
-        major_course = schedule_convert(
+        major_course = schedule_convert.run(
             schedule_dir,
             must_types,
             enter_year,
@@ -66,7 +68,7 @@ class MyThread(QThread):
         )
 
         self.signal_phase.emit("(2/3)将成绩单转换为文本...")
-        transcript_to_text(
+        transcript_to_text.run(
             transcript_file,
             transcript_dir,
             level_score,
@@ -75,7 +77,7 @@ class MyThread(QThread):
         )
 
         self.signal_phase.emit("(3/3)从成绩单中提取课程信息...")
-        parse_transcript(
+        parse_transcript.run(
             major_course,
             must_types,
             enter_year,
@@ -91,26 +93,20 @@ class MyThread(QThread):
         self.signal_phase.emit("完成")
         self.signal_now.emit('')
 
+
     def run(self):
         try:
             change_edit_type(self.ui, False)
             self.workflow()
 
-        except PermissionError:
-            self.signal_phase.emit("错误: Word文档被占用")
-        
-        except FileNotFoundError as e:
-            self.signal_phase.emit("错误: 输入文件或文件夹不存在")
-            self.signal_now.emit(str(e))
-
-        except Exception:
-            text = self.ui.progress_phase.text()
-            self.signal_phase.emit(text + "错误: 请联系管理员。")
+        except Exception as e:
+            text = traceback.format_exc() + '\m' + str(e)
+            self.signal_error.emit(text)
     
         finally:
             change_edit_type(self.ui, True)
 
-        # # test
+        # test
         # change_edit_type(self.ui, False)
         # self.workflow()
         # change_edit_type(self.ui, True)

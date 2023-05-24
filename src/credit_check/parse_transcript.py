@@ -4,7 +4,9 @@ from collections import OrderedDict
 from docxtpl import DocxTemplate
 from openpyxl import Workbook
 
-from modules import Student, create_dir, list_to_course
+from modules.student import Student
+from modules.course import list_to_course
+from modules.dir_operate import create_dir
 
 
 def extract_course(text, discard_course):
@@ -71,9 +73,9 @@ def run(
 
         # Set the schedule of the stu's major
         major_info = major_course[str(enter_year) + stu.major]
-        must_now = major_info["must_now"]
-        must_all = must_now + major_info["must_later"]
-        course_all = must_all + major_info["select"]
+        must_now = {**major_info["must_now"]}
+        must_all = {**must_now, **major_info["must_later"]}
+        course_all = {**must_all, **major_info["select"]}
 
         # Mark the course for other major's class
         stu.check_convert(course_all, same_course, ignore = ["通识选"])
