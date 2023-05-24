@@ -4,8 +4,8 @@ import os
 from PySide6.QtWidgets import QWidget, QFileDialog
 from PySide6.QtCore import Slot
 from ui.start import Ui_Form
-from form.error import ErrorDialog
-from threads.start import MyThread
+from window.error import ErrorDialog
+from thread.start import MyThread
 
 class MainForm(QWidget):
     def __init__(self):

@@ -1,7 +1,6 @@
 import traceback
-from PySide6.QtCore import QThread, Signal, Slot
+from PySide6.QtCore import QThread, Signal
 from modules.ui_operate import change_edit_type
-from form.error import ErrorDialog
 from credit_check import schedule_convert
 from credit_check import transcript_to_text
 from credit_check import parse_transcript
